@@ -81,7 +81,7 @@ int main(void)
 		b2CreatePolygonShape(entity->bodyId, &shapeDef, &tilePolygon);
 	}
 
-	Entity boxEntities[4] = { 4 };
+	Entity boxEntities[4] = { 0 };
 	for (int i = 0; i < 4; ++i)
 	{
 		Entity* entity = boxEntities + i;
@@ -95,16 +95,16 @@ int main(void)
 		b2CreatePolygonShape(entity->bodyId, &shapeDef, &tilePolygon);
 	}
 
-	bool pause = false;
+	bool paused = false;
 
 	while (!WindowShouldClose())
 	{
 		if (IsKeyPressed(KEY_P))
 		{
-			pause = !pause;
+			paused = !paused;
 		}
 
-		if (pause == false)
+		if (!paused)
 		{
 			float deltaTime = GetFrameTime();
 			b2World_Step(worldId, deltaTime, 4);
@@ -112,11 +112,6 @@ int main(void)
 
 		BeginDrawing();
 		ClearBackground(DARKGRAY);
-
-		const char* message = "Hello Box2D!";
-		int fontSize = 36;
-		int textWidth = MeasureText("Hello Box2D!", fontSize);
-		DrawText(message, (width - textWidth) / 2, 50, fontSize, LIGHTGRAY);
 
 		for (int i = 0; i < 20; ++i)
 		{
@@ -135,6 +130,4 @@ int main(void)
 	UnloadTexture(textures[1]);
 
 	CloseWindow();
-
-	return 0;
 }
